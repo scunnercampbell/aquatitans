@@ -3,12 +3,12 @@
 <head>
     <title>AquaTitans Homepage Prototype Preview</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; text-align: center; background: #0f172a; } /* Premium dark slate background */
-        img { width: 100%; max-width: 1440px; height: auto; display: block; margin: 0 auto; }
+        body, html { margin: 0; padding: 0; background: #0f172a; }
+        img { width: 100vw; height: auto; display: block; }
     </style>
 </head>
-<body style="margin:0; background:#000">
-  <img id="img" style="width:100vw; height:100vh; object-fit:contain">
+<body>
+  <img id="img">
   <script>
     const imgs = [
       'https://res.cloudinary.com/dmpcjoobp/image/upload/f_auto,q_auto/v1781275930/app.aquatitans.test_default__2_olgfmi.jpg', 
@@ -19,9 +19,8 @@
     let i = 0;
     document.getElementById('img').src = imgs[i];
     document.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') i = (i + 1) % imgs.length;
-      if (e.key === 'ArrowLeft')  i = (i - 1 + imgs.length) % imgs.length;
-      document.getElementById('img').src = imgs[i];
+      if (e.key === 'ArrowRight') { i = (i + 1) % imgs.length; document.getElementById('img').src = imgs[i]; window.scrollTo(0,0); }
+      if (e.key === 'ArrowLeft')  { i = (i - 1 + imgs.length) % imgs.length; document.getElementById('img').src = imgs[i]; window.scrollTo(0,0); }
     });
   </script>
 </body>
