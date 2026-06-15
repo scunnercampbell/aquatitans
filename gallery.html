@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AquaTitans Homepage Prototype Preview</title>
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; text-align: center; background: #0f172a; } /* Premium dark slate background */
+        img { width: 100%; max-width: 1440px; height: auto; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body style="margin:0; background:#000">
+  <img id="img" style="width:100vw; height:100vh; object-fit:contain">
+  <script>
+    const imgs = [
+      'https://res.cloudinary.com/dmpcjoobp/image/upload/f_auto,q_auto/v1781275930/app.aquatitans.test_default__2_olgfmi.jpg', 
+      'https://res.cloudinary.com/dmpcjoobp/image/upload/f_auto,q_auto/v1781275478/app.aquatitans.test_default_products_submersible-science-equipment.html_1_djujyg.png', 
+      'https://res.cloudinary.com/dmpcjoobp/image/upload/f_auto,q_auto/v1781275477/app.aquatitans.test_default_mid-water-sampler.html_ooewc3.png',
+      'https://res.cloudinary.com/dmpcjoobp/image/upload/f_auto,q_auto/v1781275483/app.aquatitans.test_default_about_gdjkfq.png'
+    ];
+    let i = 0;
+    document.getElementById('img').src = imgs[i];
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') i = (i + 1) % imgs.length;
+      if (e.key === 'ArrowLeft')  i = (i - 1 + imgs.length) % imgs.length;
+      document.getElementById('img').src = imgs[i];
+    });
+  </script>
+</body>
+</html>
