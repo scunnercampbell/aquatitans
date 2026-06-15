@@ -3,22 +3,31 @@
 <head>
     <title>AquaTitans Homepage Prototype Preview</title>
     <style>
-        body, html { margin: 0; padding: 0; background: #0f172a; }
-        img { width: 100vw; height: auto; display: block; }
+        body, html { margin: 0; padding: 0; background: #0f172a; overflow-x: hidden; }
+        #slider {
+            display: flex;
+            transition: transform 0.4s ease;
+        }
+        #slider img {
+            min-width: 100vw;
+            width: 100vw;
+            height: auto;
+            display: block;
+        }
         #prev, #next {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
-    color: white;
-    border: none;
-    font-size: 2rem;
-    padding: 1rem 1.25rem;
-    cursor: pointer;
-    z-index: 100;
-    border-radius: 4px;
-}
-#prev:hover, #next:hover { background: rgba(0,0,0,0.75); }
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            z-index: 100;
+            border-radius: 4px;
+        }
+        #prev:hover, #next:hover { background: rgba(0,0,0,0.75); }
         #prev { left: 1rem; }
         #next { right: 1rem; }
         #counter {
@@ -36,7 +45,7 @@
   <button id="prev">&#8592;</button>
   <button id="next">&#8594;</button>
   <div id="counter"></div>
-  <img id="img">
+  <div id="slider"></div>
   <script>
     const imgs = [
       'https://res.cloudinary.com/dmpcjoobp/image/upload/f_auto,q_auto/v1781275930/app.aquatitans.test_default__2_olgfmi.jpg', 
@@ -44,11 +53,19 @@
       'https://res.cloudinary.com/dmpcjoobp/image/upload/f_auto,q_auto/v1781275477/app.aquatitans.test_default_mid-water-sampler.html_ooewc3.png',
       'https://res.cloudinary.com/dmpcjoobp/image/upload/f_auto,q_auto/v1781275483/app.aquatitans.test_default_about_gdjkfq.png'
     ];
+
+    const slider = document.getElementById('slider');
+    imgs.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      slider.appendChild(img);
+    });
+
     let i = 0;
 
     function show(n) {
       i = (n + imgs.length) % imgs.length;
-      document.getElementById('img').src = imgs[i];
+      slider.style.transform = `translateX(-${i * 100}vw)`;
       document.getElementById('counter').textContent = (i + 1) + ' / ' + imgs.length;
       window.scrollTo(0, 0);
     }
