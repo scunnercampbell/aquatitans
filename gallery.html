@@ -6,6 +6,7 @@
         body, html { margin: 0; padding: 0; background: #0f172a; overflow-x: hidden; }
         #slider {
             display: flex;
+            align-items: flex-start;
             transition: transform 0.4s ease;
         }
         #slider img {
@@ -31,47 +32,61 @@
         #prev:hover, #next:hover { background: rgba(0,0,0,0.75); }
         #prev { left: 1rem; }
         #next { right: 1rem; }
-        #counter {
+        #hud {
             position: fixed;
-            bottom: 1rem;
+            bottom: 1.5rem;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255,255,255,0.6);
+            background: rgba(0,0,0,0.6);
+            color: white;
             font-family: sans-serif;
             font-size: 0.875rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+            z-index: 100;
         }
+        #hud #counter { opacity: 0.6; }
     </style>
 </head>
 <body>
   <button id="prev">&#8592;</button>
   <button id="next">&#8594;</button>
-  <div id="counter"></div>
+  <div id="hud">
+    <span id="title"></span>
+    <span id="counter"></span>
+  </div>
   <div id="slider"></div>
   <script>
-    const imgs = [
-      'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537894/app.aquatitans.test_default__3_arllgz.jpg', 
-      'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537895/app.aquatitans.test_default_products_submersible-support-equipment.html_1_yl5a96.jpg', 
-      'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537895/app.aquatitans.test_default_pscc-inverter-module.html_w06pdm.jpg',
-      'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537894/app.aquatitans.test_default_about_2_xkfqwo.jpg',
-      'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537897/app.aquatitans.test_default_about_3_sx8jbk.jpg',
-      'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537893/app.aquatitans.test_default_amasty_quote_cart__5_aez8lh.jpg',
-      'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537895/request-a-quote-m2.magento-demo.amasty.com_admin_amasty_quote_quote__tf8mdy.jpg',
-      'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537895/request-a-quote-m2.magento-demo.amasty.com_admin_amasty_quote_quote_view_quote_id_84__vsdxbd.jpg'
+    const slides = [
+      { src: 'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537894/app.aquatitans.test_default__3_arllgz.jpg', title: 'Homepage' },
+      { src: 'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537895/app.aquatitans.test_default_products_submersible-support-equipment.html_1_yl5a96.jpg', title: 'Submersible Support Equipment' },
+      { src: 'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537895/app.aquatitans.test_default_pscc-inverter-module.html_w06pdm.jpg', title: 'PSCC Inverter Module' },
+      { src: 'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537894/app.aquatitans.test_default_about_2_xkfqwo.jpg', title: 'About' },
+      { src: 'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537897/app.aquatitans.test_default_about_3_sx8jbk.jpg', title: 'About (cont.)' },
+      { src: 'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537893/app.aquatitans.test_default_amasty_quote_cart__5_aez8lh.jpg', title: 'Quote Cart' },
+      { src: 'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537895/request-a-quote-m2.magento-demo.amasty.com_admin_amasty_quote_quote__tf8mdy.jpg', title: 'Quote Admin' },
+      { src: 'https://res.cloudinary.com/dmpcjoobp/image/upload/v1781537895/request-a-quote-m2.magento-demo.amasty.com_admin_amasty_quote_quote_view_quote_id_84__vsdxbd.jpg', title: 'Quote Detail' }
     ];
 
     const slider = document.getElementById('slider');
-    imgs.forEach(src => {
+    slides.forEach(slide => {
       const img = document.createElement('img');
-      img.src = src;
+      img.src = slide.src;
       slider.appendChild(img);
     });
 
     let i = 0;
 
     function show(n) {
-      i = (n + imgs.length) % imgs.length;
+      i = (n + slides.length) % slides.length;
       slider.style.transform = `translateX(-${i * 100}vw)`;
-      document.getElementById('counter').textContent = (i + 1) + ' / ' + imgs.length;
+      document.getElementById('title').textContent = slides[i].title;
+      document.getElementById('counter').textContent = (i + 1) + ' / ' + slides.length;
       window.scrollTo(0, 0);
     }
 
